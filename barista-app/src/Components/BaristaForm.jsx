@@ -2,8 +2,6 @@ import { Component, useState } from "react";
 import RecipeChoices from "./RecipeChoices";
 import drinksJson from "./drinks.json";
 
-const onCheckAnswer = () => {};
-
 const BaristaForm = () => {
   const [inputs, setInputs] = useState({
     temperature: "",
@@ -21,11 +19,38 @@ const BaristaForm = () => {
 
   const [currentDrink, setCurrentDrink] = useState("");
   const [trueRecipe, setTrueRecipe] = useState({});
+  const [correct_temp, setCheckedTemperature] = useState("");
+  const [correct_syrup, setCheckedSyrup] = useState("");
+  const [correct_milk, setCheckedMilk] = useState("");
+  const [correct_blended, setCheckedBlended] = useState("");
 
   const getNextDrink = () => {
     let randomDrinkIndex = Math.floor(Math.random() * drinksJson.drinks.length);
     setCurrentDrink(drinksJson.drinks[randomDrinkIndex].name);
     setTrueRecipe(drinksJson.drinks[randomDrinkIndex].ingredients);
+  };
+
+  const onCheckAnswer = () => {
+    if (trueRecipe.temp != inputs["temperature"]) {
+      setCheckedTemperature("wrong");
+    } else {
+      setCheckedTemperature("right");
+    }
+    if (trueRecipe.syrup != inputs["syrup"]) {
+      setCheckedSyrup("wrong");
+    } else {
+      setCheckedSyrup("right");
+    }
+    if (trueRecipe.milk != inputs["milk"]) {
+      setCheckedMilk("wrong");
+    } else {
+      setCheckedMilk("right");
+    }
+    if (trueRecipe.blended != inputs["blended"]) {
+      setCheckedBlended("wrong");
+    } else {
+      setCheckedBlended("right");
+    }
   };
 
   const onNewDrink = () => {
@@ -35,6 +60,11 @@ const BaristaForm = () => {
       syrup: "",
       blended: "",
     });
+
+    setCheckedTemperature("");
+    setCheckedSyrup("");
+    setCheckedMilk("");
+    setCheckedBlended("");
 
     getNextDrink();
   };
@@ -53,7 +83,9 @@ const BaristaForm = () => {
         </button>
       </div>
       <h3>Temperature</h3>
-      <div className="answer-space">{inputs["temperature"]}</div>
+      <div className="answer-space" id={correct_temp}>
+        {inputs["temperature"]}
+      </div>
       <RecipeChoices
         handleChange={(e) =>
           setInputs((prevState) => ({
@@ -66,7 +98,9 @@ const BaristaForm = () => {
         checked={inputs["temperature"]}
       />
       <h3>Syrup</h3>
-      <div className="answer-space">{inputs["syrup"]}</div>
+      <div className="answer-space" id={correct_syrup}>
+        {inputs["syrup"]}
+      </div>
       <RecipeChoices
         handleChange={(e) =>
           setInputs((prevState) => ({
@@ -79,7 +113,9 @@ const BaristaForm = () => {
         checked={inputs["syrup"]}
       />
       <h3>Milk</h3>
-      <div className="answer-space">{inputs["milk"]}</div>
+      <div className="answer-space" id={correct_milk}>
+        {inputs["milk"]}
+      </div>
       <RecipeChoices
         handleChange={(e) =>
           setInputs((prevState) => ({
@@ -92,7 +128,9 @@ const BaristaForm = () => {
         checked={inputs["milk"]}
       />
       <h3>Blended</h3>
-      <div className="answer-space">{inputs["blended"]}</div>
+      <div className="answer-space" id={correct_blended}>
+        {inputs["blended"]}
+      </div>
       <RecipeChoices
         handleChange={(e) =>
           setInputs((prevState) => ({
