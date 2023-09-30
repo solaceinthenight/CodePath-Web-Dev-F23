@@ -1,8 +1,8 @@
 import { Component, useState } from "react";
 import RecipeChoices from "./RecipeChoices";
+import drinksJson from "./drinks.json";
 
 const onCheckAnswer = () => {};
-const onNewDrink = () => {};
 
 const BaristaForm = () => {
   const [inputs, setInputs] = useState({
@@ -19,10 +19,41 @@ const BaristaForm = () => {
     blended: ["yes", "turbo", "no"],
   };
 
+  const [currentDrink, setCurrentDrink] = useState("");
+  const [trueRecipe, setTrueRecipe] = useState({});
+
+  const getNextDrink = () => {
+    let randomDrinkIndex = Math.floor(
+      Math.rarndom() * drinksJson.drinks.length
+    );
+    setCurrentDrink(drinksJson.drinks[randomDrinkIndex].name);
+    setTrueRecipe(drinksJson.drinks[randomDrinkIndex].ingrerdiennts);
+  };
+
+  const onNewDrink = () => {
+    setInputs({
+      temperature: "",
+      milk: "",
+      syrup: "",
+      blended: "",
+    });
+
+    getNextDrink();
+  };
+
   return (
     <div>
       <h2>Hi, I'd like to order a:</h2>
-
+      <div className="drink-container">
+        <h2 className="mini-header">{currentDrink}</h2>
+        <button
+          type="new-drink-button"
+          className="button newdrink"
+          onClick={onNewDrink}
+        >
+          🔄
+        </button>
+      </div>
       <h3>Temperature</h3>
       <div className="answer-space">{inputs["temperature"]}</div>
       <RecipeChoices
