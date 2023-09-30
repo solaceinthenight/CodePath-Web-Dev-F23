@@ -23,11 +23,9 @@ const BaristaForm = () => {
   const [trueRecipe, setTrueRecipe] = useState({});
 
   const getNextDrink = () => {
-    let randomDrinkIndex = Math.floor(
-      Math.rarndom() * drinksJson.drinks.length
-    );
+    let randomDrinkIndex = Math.floor(Math.random() * drinksJson.drinks.length);
     setCurrentDrink(drinksJson.drinks[randomDrinkIndex].name);
-    setTrueRecipe(drinksJson.drinks[randomDrinkIndex].ingrerdiennts);
+    setTrueRecipe(drinksJson.drinks[randomDrinkIndex].ingredients);
   };
 
   const onNewDrink = () => {
